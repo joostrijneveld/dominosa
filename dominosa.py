@@ -43,7 +43,7 @@ def possible_pairs(board):
 
 
 def find_all_xy(pairs, x, y):
-    for p in pairs:
+    for p in list(pairs):  # copy the list to prevent modification errors
         if p.x == x and p.y == y:
             yield p
         elif p.horizontal and p.x-1 == x and p.y == y:

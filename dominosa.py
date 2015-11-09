@@ -71,22 +71,22 @@ def solve(board):
     boardpairs = list(possible_pairs(board))
     found_pairs = set([])
     for i in range(5):
-        available = [x for x in boardpairs if x not in found_pairs]
         # check for unique pairs
-        for x, c in Counter(available).items():
+        for p, c in Counter(boardpairs).items():
             if c == 1:
-                found_pairs.add(x)
-                remove_all_overlapping(boardpairs, x)
-        available = [x for x in boardpairs if x not in found_pairs]
+                found_pairs.add(p)
+                remove_all_overlapping(boardpairs, p)
+        boardpairs = [x for x in boardpairs if x not in found_pairs]
         for x in range(N+1):
             for y in range(N):
                 # for all unused fields
                 if len(list(find_all_xy(found_pairs, x, y))) == 0:
                     # test if there is only one alternative
-                    pairs = list(find_all_xy(available, x, y))
+                    pairs = list(find_all_xy(boardpairs, x, y))
                     if len(pairs) == 1:
                         found_pairs.add(pairs[0])
                         remove_all_overlapping(boardpairs, pairs[0])
+        boardpairs = [x for x in boardpairs if x not in found_pairs]
 
     return found_pairs
 

@@ -55,7 +55,10 @@ def find_all_xy(pairs, x, y):
 def remove_all_overlapping(pairs, pair):
     def remove_all_xy(pairs, x, y):
         for p in find_all_xy(pairs, x, y):
-            pairs.remove(p)
+            # because of __eq__ trickery, we cannot use the regular list.remove
+            for i, el in enumerate(pairs):
+                if el is p:
+                    del pairs[i]
 
     remove_all_xy(pairs, pair.x, pair.y)
     if pair.horizontal:

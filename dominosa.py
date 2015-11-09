@@ -67,6 +67,12 @@ def remove_all_overlapping(pairs, pair):
         remove_all_xy(pairs, pair.x, pair.y-1)
 
 
+def remove_eq_except(all_pairs, pair, except_pairs):
+    for i, p in enumerate(all_pairs):
+        if not any(p is x for x in except_pairs) and p == pair:
+            del all_pairs[i]
+
+
 def solve(board):
     boardpairs = list(possible_pairs(board))
     found_pairs = set([])
@@ -86,6 +92,10 @@ def solve(board):
                     if len(pairs) == 1:
                         found_pairs.add(pairs[0])
                         remove_all_overlapping(boardpairs, pairs[0])
+                    # or if all of these alternatives are identical
+                    elif len(set(pairs)) == 1:
+                        # remove other occurrences of this pair
+                        remove_eq_except(boardpairs, pairs[0], pairs)
         boardpairs = [x for x in boardpairs if x not in found_pairs]
 
     return found_pairs

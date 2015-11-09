@@ -30,7 +30,7 @@ class Pair(object):
         return self.v.__hash__()
 
     def __repr__(self):
-        return self.v.__repr__()
+        return "({},{})-{}-{}".format(self.x, self.y, self.horizontal, self.v)
 
 
 def possible_pairs(board):

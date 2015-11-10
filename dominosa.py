@@ -89,6 +89,32 @@ def remove_eq_except(all_pairs, pair, except_pairs):
             del all_pairs[i]
 
 
+def pretty_print(board, found_pairs):
+    output = [['.'] * (2*N + 1) for x in range(2*N + 3)]
+    for p in found_pairs:
+        output[2*p.x+1][2*p.y+1] = board[p.x][p.y]
+        output[2*p.x+2][2*p.y+1] = '|'
+        output[2*p.x+1][2*p.y+2] = '-'
+        if p.horizontal:
+            output[2*p.x-1][2*p.y+1] = board[p.x-1][p.y]
+            output[2*p.x][2*p.y+1] = ' '
+            for i in [-1, 1]:
+                output[2*p.x+i][2*p.y] = '-'
+                output[2*p.x+i][2*p.y+2] = '-'
+            output[2*p.x-2][2*p.y+1] = '|'
+        else:
+            output[2*p.x+1][2*p.y-1] = board[p.x][p.y-1]
+            output[2*p.x+1][2*p.y] = ' '
+            for i in [-1, 1]:
+                output[2*p.x][2*p.y-i] = '|'
+                output[2*p.x+2][2*p.y-i] = '|'
+            output[2*p.x+1][2*p.y-2] = '-'
+    for row in list(zip(*output)):
+        for s in row:
+            print(s, end=' ')
+        print()
+
+
 def solve(board):
     boardpairs = list(possible_pairs(board))
     found_pairs = set([])
@@ -116,4 +142,4 @@ def solve(board):
 
     return found_pairs
 
-print(solve(board))
+pretty_print(board, solve(board))

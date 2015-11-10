@@ -8,6 +8,22 @@ board = [[2, 3, 2, 2, 1],
          [0, 3, 3, 1, 0],
          [0, 3, 1, 0, 2]]
 
+board = [[5, 5, 0, 4, 5, 5, 1],
+         [5, 0, 3, 4, 1, 1, 4],
+         [1, 0, 3, 1, 2, 5, 1],
+         [2, 4, 4, 3, 2, 2, 1],
+         [0, 2, 4, 2, 4, 0, 0],
+         [3, 2, 3, 5, 0, 3, 3]]
+
+# board = [[2, 1, 5, 0, 5, 2, 1, 5, 6],
+#          [5, 1, 7, 2, 0, 0, 5, 3, 6],
+#          [1, 5, 6, 0, 4, 3, 1, 4, 7],
+#          [1, 5, 4, 2, 2, 3, 0, 0, 6],
+#          [2, 4, 3, 7, 3, 2, 4, 5, 2],
+#          [1, 7, 1, 4, 4, 7, 3, 7, 7],
+#          [1, 6, 3, 5, 0, 7, 6, 0, 0],
+#          [4, 6, 2, 4, 6, 3, 5, 3, 7]]
+
 board = list(zip(*board))  # makes coordinates more intuitive
 N = max([x for row in board for x in row]) + 1
 
@@ -76,7 +92,7 @@ def remove_eq_except(all_pairs, pair, except_pairs):
 def solve(board):
     boardpairs = list(possible_pairs(board))
     found_pairs = set([])
-    for i in range(5):
+    while boardpairs:
         # check for unique pairs
         for p, c in Counter(boardpairs).items():
             if c == 1:
